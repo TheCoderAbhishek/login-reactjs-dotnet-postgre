@@ -25,9 +25,16 @@ E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\obj\Debug\net8.0\staticw
 E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.dot-net-app.props
 E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\obj\Debug\net8.0\staticwebassets.pack.json
 E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\obj\Debug\net8.0\scopedcss\bundle\dot-net-app.styles.css
-E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\obj\Debug\net8.0\dot-net-app.csproj.CopyComplete
 E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\obj\Debug\net8.0\dot-net-app.dll
 E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\obj\Debug\net8.0\refint\dot-net-app.dll
 E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\obj\Debug\net8.0\dot-net-app.pdb
 E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\obj\Debug\net8.0\dot-net-app.genruntimeconfig.cache
 E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\obj\Debug\net8.0\ref\dot-net-app.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\obj\Debug\net8.0\dot-net-.2597BC74.Up2Date
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Newtonsoft.Json.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Npgsql.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Serilog.dll
