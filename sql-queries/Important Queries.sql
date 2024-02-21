@@ -18,3 +18,5 @@ CREATE TABLE users (
 
 SELECT * FROM public.users
 ORDER BY id ASC 
+
+ALTER TABLE users DROP COLUMN otp_secret;
