@@ -61,10 +61,6 @@ namespace dot_net_app.Data
                 .HasColumnName("is_verified");
 
             modelBuilder.Entity<User>()
-                .Property(u => u.OtpSecret)
-                .HasColumnName("otp_secret");
-
-            modelBuilder.Entity<User>()
                 .Property(u => u.CreatedAt)
                 .HasColumnName("created_at");
 

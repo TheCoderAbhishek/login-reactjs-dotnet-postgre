@@ -16,7 +16,6 @@ namespace dot_net_app.Model.AccountModel
         public bool IsAdmin { get; set; }
         public bool IsActive { get; set; }
         public bool IsVerified { get; set; }
-        public string? OtpSecret { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public DateTime? LastLoginAt { get; set; }
