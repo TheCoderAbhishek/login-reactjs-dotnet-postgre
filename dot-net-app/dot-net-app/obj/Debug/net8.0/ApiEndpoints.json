@@ -21,6 +21,22 @@
   },
   {
     "ContainingType": "dot_net_app.Controllers.AccountController",
+    "Method": "CreateUser",
+    "RelativePath": "api/Account/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "dot_net_app.Model.AccountModel.CreateUserRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "dot_net_app.Controllers.AccountController",
     "Method": "GetAllUsers",
     "RelativePath": "api/Account/users",
     "HttpMethod": "GET",

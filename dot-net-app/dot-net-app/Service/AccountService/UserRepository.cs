@@ -44,13 +44,6 @@ namespace dot_net_app.Service.AccountService
             return user;
         }
 
-        public async Task<int> CreateUserAsync(User user)
-        {
-            _accountDbContext.Users.Add(user);
-            await _accountDbContext.SaveChangesAsync();
-            return user.Id;
-        }
-
         public async Task UpdateUserAsync(User user)
         {
             _accountDbContext.Users.Update(user);
@@ -70,6 +63,14 @@ namespace dot_net_app.Service.AccountService
         public async Task<List<User>> GetAllUsersAsync()
         {
             return await _accountDbContext.Users.ToListAsync();
+        }
+
+        // User Registration
+        public async Task<User> CreateUserAsync(User user)
+        {
+            _accountDbContext.Users.Add(user);
+            await _accountDbContext.SaveChangesAsync();
+            return user;
         }
     }
 }

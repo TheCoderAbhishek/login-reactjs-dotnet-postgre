@@ -27,11 +27,6 @@ namespace dot_net_app.Service.AccountService
             return await _userRepository.GetUserByEmailAsync(email);
         }
 
-        public async Task<int> CreateUserAsync(User user)
-        {
-            return await _userRepository.CreateUserAsync(user);
-        }
-
         public async Task UpdateUserAsync(User user)
         {
             await _userRepository.UpdateUserAsync(user);
@@ -40,6 +35,11 @@ namespace dot_net_app.Service.AccountService
         public async Task DeleteUserAsync(int userId)
         {
             await _userRepository.DeleteUserAsync(userId);
+        }
+
+        public async Task<User> CreateUserAsync(User user)
+        {
+            return await _userRepository.CreateUserAsync(user);
         }
     }
 }
