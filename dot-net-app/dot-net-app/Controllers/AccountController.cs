@@ -70,6 +70,5 @@ namespace dot_net_app.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-
     }
 }

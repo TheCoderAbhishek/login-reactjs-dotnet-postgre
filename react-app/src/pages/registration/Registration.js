@@ -1,30 +1,49 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Registration = () => {
   const [formData, setFormData] = useState({
     username: '',
     email: '',
-    password: '',
-    confirmPassword: '',
+    passwordHash: '',
+    confirmPasswordHash: '',
     fullName: '',
     mobileNumber: '',
     gender: '',
     dateOfBirth: ''
   });
 
+  // eslint-disable-next-line
+  const [error, setError] = useState('');
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (e.target.type === 'date') {
+      const date = new Date(e.target.value);
+      const utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+      setFormData({ ...formData, [e.target.name]: utcDate.toISOString().split('T')[0] });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (formData.passwordHash !== formData.confirmPasswordHash) {
+      setError("Passwords don't match");
+      return;
+    }
     try {
-      // Send registration data to backend
-      console.log(formData); // For testing purposes
-      // Make a POST request to your backend API to register the user
+      const response = await axios.post('https://localhost:44354/api/Account/create', formData);
+
+      if (response.status === 200 || response.status === 201) {
+        console.log('Registration successful');
+      } else {
+        throw new Error('Registration failed');
+      }
     } catch (error) {
-      // Handle registration error
+      console.error('Registration error:', error);
+      setError('Registration failed. Please try again later.');
     }
   };
 
@@ -50,16 +69,16 @@ const Registration = () => {
         />
         <input
           type="password"
-          name="password"
-          value={formData.password}
+          name="passwordHash"
+          value={formData.passwordHash}
           onChange={handleChange}
           placeholder="Password"
           className="w-64 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
         />
         <input
           type="password"
-          name="confirmPassword"
-          value={formData.confirmPassword}
+          name="confirmPasswordHash"
+          value={formData.confirmPasswordHash}
           onChange={handleChange}
           placeholder="Confirm Password"
           className="w-64 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"

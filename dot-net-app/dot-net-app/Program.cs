@@ -29,6 +29,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Configure CORS to allow requests from the frontend origin
+app.UseCors(builder =>
+{
+    builder.WithOrigins("http://localhost:3000")
+           .AllowAnyMethod()
+           .AllowAnyHeader()
+           .AllowCredentials(); // If you're using credentials (cookies, headers) in your requests
+});
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
