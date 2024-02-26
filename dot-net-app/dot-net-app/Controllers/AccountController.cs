@@ -52,7 +52,7 @@ namespace dot_net_app.Controllers
                     FullName = request.FullName,
                     MobileNumber = request.MobileNumber,
                     Gender = request.Gender,
-                    DateOfBirth = request.DateOfBirth,
+                    DateOfBirth = request.DateOfBirth?.ToUniversalTime(),
                     IsAdmin = true,
                     IsActive = true,
                     IsVerified = true,
