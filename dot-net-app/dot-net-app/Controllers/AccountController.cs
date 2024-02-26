@@ -35,7 +35,7 @@ namespace dot_net_app.Controllers
 
         // POST: api/account/create
         [HttpPost("create")]
-        public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest request)
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest createUserRequest)
         {
             try
             {
@@ -46,13 +46,13 @@ namespace dot_net_app.Controllers
 
                 var user = new User
                 {
-                    Username = request.Username,
-                    Email = request.Email,
-                    PasswordHash = request.PasswordHash,
-                    FullName = request.FullName,
-                    MobileNumber = request.MobileNumber,
-                    Gender = request.Gender,
-                    DateOfBirth = request.DateOfBirth?.ToUniversalTime(),
+                    Username = createUserRequest.Username,
+                    Email = createUserRequest.Email,
+                    PasswordHash = createUserRequest.PasswordHash,
+                    FullName = createUserRequest.FullName,
+                    MobileNumber = createUserRequest.MobileNumber,
+                    Gender = createUserRequest.Gender,
+                    DateOfBirth = createUserRequest.DateOfBirth?.ToUniversalTime(),
                     IsAdmin = true,
                     IsActive = true,
                     IsVerified = true,
