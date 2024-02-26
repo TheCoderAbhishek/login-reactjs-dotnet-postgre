@@ -39,31 +39,12 @@ namespace dot_net_app.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-
-                var user = new User
-                {
-                    Username = createUserRequest.Username,
-                    Email = createUserRequest.Email,
-                    PasswordHash = createUserRequest.PasswordHash,
-                    FullName = createUserRequest.FullName,
-                    MobileNumber = createUserRequest.MobileNumber,
-                    Gender = createUserRequest.Gender,
-                    DateOfBirth = createUserRequest.DateOfBirth?.ToUniversalTime(),
-                    IsAdmin = true,
-                    IsActive = true,
-                    IsVerified = true,
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow,
-                    LastLoginAt = DateTime.UtcNow
-                };
-
-                var userData = await _userService.CreateUserAsync(user);
-
+                var userData = await _userService.CreateUserAsync(createUserRequest);
                 return Ok(userData);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {

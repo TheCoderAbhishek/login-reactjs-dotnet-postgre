@@ -16,5 +16,11 @@ namespace dot_net_app.Model.AccountModel
         public string? MobileNumber { get; set; }
         public string? Gender { get; set; }
         public DateTime? DateOfBirth { get; set; }
+        public bool IsValid()
+        {
+            return !string.IsNullOrWhiteSpace(Username)
+                && !string.IsNullOrWhiteSpace(Email)
+                && !string.IsNullOrWhiteSpace(PasswordHash);
+        }
     }
 }

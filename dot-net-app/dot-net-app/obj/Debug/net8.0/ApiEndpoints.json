@@ -28,7 +28,7 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "request",
+        "Name": "createUserRequest",
         "Type": "dot_net_app.Model.AccountModel.CreateUserRequest",
         "IsRequired": true
       }
