@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 
 const Registration = () => {
@@ -13,9 +15,9 @@ const Registration = () => {
     gender: '',
     dateOfBirth: ''
   });
-
-  // eslint-disable-next-line
-  const [error, setError] = useState('');
+  const [passwordVisible, setPasswordVisible] = useState(false); // State to track password visibility
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false); // State to track confirm password visibility
+  const [setError] = useState('');
 
   const handleChange = (e) => {
     if (e.target.type === 'date') {
@@ -47,6 +49,14 @@ const Registration = () => {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setConfirmPasswordVisible(!confirmPasswordVisible);
+  };
+
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <h2 className="text-3xl font-semibold mb-8">Registration Page</h2>
@@ -67,22 +77,38 @@ const Registration = () => {
           placeholder="Email"
           className="w-64 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
         />
-        <input
-          type="password"
-          name="passwordHash"
-          value={formData.passwordHash}
-          onChange={handleChange}
-          placeholder="Password"
-          className="w-64 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
-        />
-        <input
-          type="password"
-          name="confirmPasswordHash"
-          value={formData.confirmPasswordHash}
-          onChange={handleChange}
-          placeholder="Confirm Password"
-          className="w-64 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
-        />
+        <div className="relative">
+          <input
+            type={passwordVisible ? 'text' : 'password'}
+            name="passwordHash"
+            value={formData.passwordHash}
+            onChange={handleChange}
+            placeholder="Password"
+            className="w-64 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+          />
+          <span
+            className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer"
+            onClick={togglePasswordVisibility}
+          >
+            <FontAwesomeIcon icon={passwordVisible ? faEyeSlash : faEye} />
+          </span>
+        </div>
+        <div className="relative">
+          <input
+            type={confirmPasswordVisible ? 'text' : 'password'}
+            name="confirmPasswordHash"
+            value={formData.confirmPasswordHash}
+            onChange={handleChange}
+            placeholder="Confirm Password"
+            className="w-64 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+          />
+          <span
+            className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer"
+            onClick={toggleConfirmPasswordVisibility}
+          >
+            <FontAwesomeIcon icon={confirmPasswordVisible ? faEyeSlash : faEye} />
+          </span>
+        </div>
         <input
           type="text"
           name="fullName"
