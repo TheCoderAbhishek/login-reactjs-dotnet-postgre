@@ -21,8 +21,42 @@ const Registration = () => {
   const [successMessage, setSuccessMessage] = useState('');
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    setErrors({ ...errors, [e.target.name]: '' });
+    const { name, value } = e.target;
+    let error = '';
+  
+    switch (name) {
+      case 'username':
+        error = value.trim() ? (value.length < 3 ? 'Username must be at least 3 characters long' : '') : 'Username is required';
+        break;
+      case 'email':
+        error = value.trim() ? (/^\S+@\S+\.\S+$/.test(value) ? '' : 'Invalid email address') : 'Email is required';
+        break;
+      case 'passwordHash':
+        error = value.trim() ? (value.length < 6 ? 'Password must be at least 6 characters long' : '') : 'Password is required';
+        // Also, re-validate confirmPasswordHash when passwordHash changes
+        setErrors({ ...errors, confirmPassword: value !== formData.confirmPasswordHash ? "Passwords don't match" : '' });
+        break;
+      case 'confirmPasswordHash':
+        error = value.trim() ? (value !== formData.passwordHash ? "Passwords don't match" : '') : 'Confirm Password is required';
+        break;
+      case 'fullName':
+        error = value.trim() ? '' : 'Full Name is required';
+        break;
+      case 'mobileNumber':
+        error = value.trim() ? (/^\d{10}$/.test(value) ? '' : 'Invalid mobile number') : 'Mobile Number is required';
+        break;
+      case 'gender':
+        error = value.trim() ? '' : 'Gender is required';
+        break;
+      case 'dateOfBirth':
+        error = value.trim() ? '' : 'Date of Birth is required';
+        break;
+      default:
+        break;
+    }
+  
+    setErrors({ ...errors, [name]: error });
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
@@ -38,7 +72,7 @@ const Registration = () => {
     }
     try {
       const response = await axios.post('https://localhost:44354/api/Account/create', formData);
-
+  
       if (response.status === 200 || response.status === 201) {
         setSuccessMessage('Registration successful');
         setErrors({});
@@ -57,10 +91,13 @@ const Registration = () => {
       }
     } catch (error) {
       console.error('Registration error:', error);
+      if (error.response) {
+        console.error('Server response:', error.response.data);
+      }
       setErrors({ general: 'Registration failed. Please try again later.' });
     }
   };
-
+  
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
