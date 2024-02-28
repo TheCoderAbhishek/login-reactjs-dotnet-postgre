@@ -1,9 +1,10 @@
-import { useState } from 'react'
-import { Dialog, Popover } from '@headlessui/react'
+import { useState } from 'react';
+import { Dialog, Popover } from '@headlessui/react';
 import {
   Bars3Icon,
   XMarkIcon,
-} from '@heroicons/react/24/outline'
+} from '@heroicons/react/24/outline';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -12,10 +13,9 @@ export default function Header() {
     <header className="bg-white">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
-          <a href="https://www.google.com/" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
-            <img className="h-8 w-auto" src="/assets/logo.svg" alt="" />
-          </a>
+          <div className="text-sm font-semibold leading-6 text-gray-900">
+            <Link to="/" className="text-grey-900"><img className="h-8 w-auto" src="/assets/logo.svg" alt="" /></Link>
+          </div>
         </div>
         <div className="flex lg:hidden">
           <button
@@ -40,9 +40,9 @@ export default function Header() {
           </a>
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="https://www.google.com/" className="text-sm font-semibold leading-6 text-gray-900">
-            Log in <span aria-hidden="true">&rarr;</span>
-          </a>
+          <div className="text-sm font-semibold leading-6 text-gray-900">
+            <Link to="/login" className="text-grey-900">Log in <span aria-hidden="true">&rarr;</span></Link>
+          </div>
         </div>
       </nav>
       <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
