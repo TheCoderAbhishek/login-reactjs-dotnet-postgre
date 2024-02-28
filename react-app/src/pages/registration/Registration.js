@@ -168,7 +168,7 @@ const Registration = () => {
               <option value="other">Other</option>
             </select>
             {errors.gender && (
-              <p className="text-red-500 absolute top-full mt-1">{errors.gender}</p>
+              <p className="text-red-500 mt-1">{errors.gender}</p>
             )}
           </div>
           <InputField
