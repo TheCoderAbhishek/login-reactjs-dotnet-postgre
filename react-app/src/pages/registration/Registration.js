@@ -15,8 +15,8 @@ const Registration = () => {
     gender: '',
     dateOfBirth: ''
   });
-  const [passwordVisible, setPasswordVisible] = useState(false); // State to track password visibility
-  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false); // State to track confirm password visibility
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [setError] = useState('');
 
   const handleChange = (e) => {
