@@ -1,6 +1,5 @@
 ﻿using dot_net_app.Interface.AccountInterface;
 using dot_net_app.Model.AccountModel;
-using dot_net_app.Service.AccountService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace dot_net_app.Controllers
