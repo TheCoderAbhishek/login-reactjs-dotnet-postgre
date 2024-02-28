@@ -33,7 +33,7 @@ const Registration = () => {
         break;
       case 'passwordHash':
         error = value.trim() ? (value.length < 6 ? 'Password must be at least 6 characters long' : '') : 'Password is required';
-        // Also, re-validate confirmPasswordHash when passwordHash changes
+        
         setErrors({ ...errors, confirmPassword: value !== formData.confirmPasswordHash ? "Passwords don't match" : '' });
         break;
       case 'confirmPasswordHash':
@@ -90,7 +90,7 @@ const Registration = () => {
         throw new Error('Registration failed');
       }
     } catch (error) {
-      console.error('Registration error:', error);
+        console.error('Registration error:', error);
       if (error.response) {
         console.error('Server response:', error.response.data);
       }
@@ -138,7 +138,7 @@ const Registration = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-8">
       <h2 className="text-3xl font-semibold mb-8">Registration Page</h2>
-      <div className="w-full max-w-md border border-gray-300 rounded-md p-6">
+      <div className="w-full max-w-xs border border-gray-300 rounded-md p-4">
         {errors.general && <p className="text-red-500 mb-4">{errors.general}</p>}
         {successMessage && <p className="text-green-500 mb-4">{successMessage}</p>}
         <form onSubmit={handleSubmit} className="space-y-4">
