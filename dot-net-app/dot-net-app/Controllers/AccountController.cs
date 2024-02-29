@@ -52,7 +52,7 @@ namespace dot_net_app.Controllers
             }
         }
 
-        // api/account/login
+        // POST: api/account/login
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginRequest userLoginRequest)
         {
