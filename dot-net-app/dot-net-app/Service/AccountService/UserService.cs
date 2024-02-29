@@ -38,7 +38,7 @@ namespace dot_net_app.Service.AccountService
         }
 
         // User Registration
-        public async Task<User> CreateUserAsync(CreateUserRequest createUserRequest)
+        public async Task<User?> CreateUserAsync(CreateUserRequest createUserRequest)
         {
             if (!createUserRequest.IsValid())
             {

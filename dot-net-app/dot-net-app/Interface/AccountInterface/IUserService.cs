@@ -11,7 +11,7 @@ namespace dot_net_app.Interface.AccountInterface
         Task DeleteUserAsync(int userId);
 
         // User Registration
-        Task<User> CreateUserAsync(CreateUserRequest createUserRequest);
+        Task<User?> CreateUserAsync(CreateUserRequest createUserRequest);
 
         // User Login
         Task<User?> GetUserByUsernameAndPasswordAsync(string usernameOrEmail, string password);

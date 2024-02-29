@@ -66,7 +66,7 @@ namespace dot_net_app.Service.AccountService
         }
 
         // User Registration
-        public async Task<User> CreateUserAsync(User user)
+        public async Task<User?> CreateUserAsync(User user)
         {
             _accountDbContext.Users.Add(user);
             await _accountDbContext.SaveChangesAsync();

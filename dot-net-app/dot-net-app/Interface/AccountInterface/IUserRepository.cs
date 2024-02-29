@@ -12,7 +12,7 @@ namespace dot_net_app.Interface.AccountInterface
         Task<List<User>> GetAllUsersAsync();
 
         // User Registration
-        Task<User> CreateUserAsync(User user);
+        Task<User?> CreateUserAsync(User user);
 
         // User Login
         Task<User?> GetUserByUsernameOrEmailAsync(string usernameOrEmail);
