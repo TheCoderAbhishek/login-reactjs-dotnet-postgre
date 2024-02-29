@@ -21,8 +21,24 @@
   },
   {
     "ContainingType": "dot_net_app.Controllers.AccountController",
+    "Method": "Login",
+    "RelativePath": "api/Account/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userLoginRequest",
+        "Type": "dot_net_app.Model.AccountModel.UserLoginRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "dot_net_app.Controllers.AccountController",
     "Method": "CreateUser",
-    "RelativePath": "api/Account/create",
+    "RelativePath": "api/Account/register",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,

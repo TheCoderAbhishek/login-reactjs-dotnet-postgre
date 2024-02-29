@@ -13,5 +13,8 @@ namespace dot_net_app.Interface.AccountInterface
 
         // User Registration
         Task<User> CreateUserAsync(User user);
+
+        // User Login
+        Task<User?> GetUserByUsernameOrEmailAsync(string usernameOrEmail);
     }
 }

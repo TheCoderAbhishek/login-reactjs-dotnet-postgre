@@ -1,5 +1,6 @@
 ﻿using dot_net_app.Interface.AccountInterface;
 using dot_net_app.Model.AccountModel;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace dot_net_app.Controllers
@@ -32,8 +33,8 @@ namespace dot_net_app.Controllers
             }
         }
 
-        // POST: api/account/create
-        [HttpPost("create")]
+        // POST: api/account/register
+        [HttpPost("register")]
         public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest createUserRequest)
         {
             try
@@ -44,6 +45,31 @@ namespace dot_net_app.Controllers
             catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        // api/account/login
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] UserLoginRequest userLoginRequest)
+        {
+            try
+            {
+                if (userLoginRequest == null || string.IsNullOrWhiteSpace(userLoginRequest.UsernameOrEmail) || string.IsNullOrWhiteSpace(userLoginRequest.PasswordHash))
+                {
+                    return BadRequest("Username/email and password are required.");
+                }
+
+                var user = await _userService.GetUserByUsernameAndPasswordAsync(userLoginRequest.UsernameOrEmail, userLoginRequest.PasswordHash);
+                if (user == null)
+                {
+                    return Unauthorized("Invalid username/email or password.");
+                }
+
+                return Ok(user);
             }
             catch (Exception ex)
             {

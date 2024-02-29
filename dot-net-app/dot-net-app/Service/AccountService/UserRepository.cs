@@ -72,5 +72,11 @@ namespace dot_net_app.Service.AccountService
             await _accountDbContext.SaveChangesAsync();
             return user;
         }
+
+        // User Login
+        public async Task<User?> GetUserByUsernameOrEmailAsync(string usernameOrEmail)
+        {
+            return await _accountDbContext.Users.FirstOrDefaultAsync(u => u.Username == usernameOrEmail || u.Email == usernameOrEmail);
+        }
     }
 }

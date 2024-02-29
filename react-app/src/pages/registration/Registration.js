@@ -71,7 +71,7 @@ const Registration = () => {
       return;
     }
     try {
-      const response = await axios.post('https://localhost:44354/api/Account/create', formData);
+      const response = await axios.post('https://localhost:44354/api/Account/register', formData);
   
       if (response.status === 200 || response.status === 201) {
         setSuccessMessage('Registration successful');

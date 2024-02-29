@@ -66,5 +66,18 @@ namespace dot_net_app.Service.AccountService
 
             return await _userRepository.CreateUserAsync(user);
         }
+
+        // User Login
+        public async Task<User?> GetUserByUsernameAndPasswordAsync(string usernameOrEmail, string password)
+        {
+            var user = await _userRepository.GetUserByUsernameOrEmailAsync(usernameOrEmail);
+
+            if (user != null && BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
+            {
+                return user;
+            }
+
+            return null;
+        }
     }
 }

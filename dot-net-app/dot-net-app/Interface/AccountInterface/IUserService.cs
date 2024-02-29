@@ -12,5 +12,8 @@ namespace dot_net_app.Interface.AccountInterface
 
         // User Registration
         Task<User> CreateUserAsync(CreateUserRequest createUserRequest);
+
+        // User Login
+        Task<User?> GetUserByUsernameAndPasswordAsync(string usernameOrEmail, string password);
     }
 }
