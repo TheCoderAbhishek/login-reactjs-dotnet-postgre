@@ -3,11 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace dot_net_app.Data
 {
-    public class AccountDbContext : DbContext
+    public class AccountDbContext(DbContextOptions<AccountDbContext> options) : DbContext(options)
     {
-        public AccountDbContext(DbContextOptions<AccountDbContext> options) : base(options)
-        {
-        }
         public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

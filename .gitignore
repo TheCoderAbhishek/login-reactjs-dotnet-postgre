@@ -1,3 +1,4 @@
 .vs/
-obj/
-bin/
+dot-net-app/log/
+dot-net-app/obj/
+dot-net-app/bin/
