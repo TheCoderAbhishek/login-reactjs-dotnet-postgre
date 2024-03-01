@@ -2,3 +2,7 @@
 dot-net-app/log/
 dot-net-app/obj/
 dot-net-app/bin/
+*.dll
+*.cache
+*.pdb
+*.exe
