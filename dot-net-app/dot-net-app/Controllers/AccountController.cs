@@ -1,14 +1,14 @@
 ﻿using dot_net_app.Interface.AccountInterface;
 using dot_net_app.Model.AccountModel;
 using dot_net_app.Model.Shared;
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace dot_net_app.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController(IUserRepository userRepository, IUserService userService) : ControllerBase
+    public class AccountController(IUserRepository userRepository, IUserService userService) : Controller
     {
         private readonly IUserRepository _userRepository = userRepository;
         private readonly IUserService _userService = userService;
@@ -39,10 +39,25 @@ namespace dot_net_app.Controllers
                     return BadRequest("Username and OTP are required.");
                 }
 
+                var userDataJson = TempData["UserDataJson"] as string;
+
+                if (userDataJson == null)
+                {
+                    return BadRequest("User data not found in TempData.");
+                }
+
+                var user = JsonConvert.DeserializeObject<User>(userDataJson);
+
+                if (user == null)
+                {
+                    return BadRequest("User data could not be deserialized.");
+                }
+
                 bool isOTPVerified = await _userService.VerifyOtp(verifyOtpRequest.Username, verifyOtpRequest.Otp);
 
                 if (isOTPVerified)
                 {
+                    await _userRepository.CreateUserAsync(user);
                     return Ok(new { message = "OTP verification successful" });
                 }
                 else
@@ -63,6 +78,11 @@ namespace dot_net_app.Controllers
             try
             {
                 var userData = await _userService.CreateUserAsync(createUserRequest);
+
+                var userDataJson = JsonConvert.SerializeObject(userData);
+
+                TempData["UserDataJson"] = userDataJson;
+
                 return Ok(userData);
             }
             catch (ArgumentException ex)

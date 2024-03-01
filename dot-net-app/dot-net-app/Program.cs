@@ -11,6 +11,12 @@ var Configuration = builder.Configuration;
 
 // Add services to the container.
 
+// Add TempData
+builder.Services.AddMvc()
+    .AddSessionStateTempDataProvider();
+
+builder.Services.AddSession();
+
 // Add DbContext
 builder.Services.AddDbContext<AccountDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -43,6 +49,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Configure session middleware
+app.UseSession();
 
 // Configure CORS to allow requests from the frontend origin
 app.UseCors(builder =>

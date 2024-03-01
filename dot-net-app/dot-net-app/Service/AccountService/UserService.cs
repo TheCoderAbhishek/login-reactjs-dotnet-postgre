@@ -11,7 +11,7 @@ namespace dot_net_app.Service.AccountService
         private readonly IMemoryCache _memoryCache = memoryCache;
         private readonly IEmailService _emailService = emailService;
 
-        private string GenerateOTP()
+        private static string GenerateOTP()
         {
             Random random = new();
             int otpNumber = random.Next(100000, 999999);
@@ -54,7 +54,7 @@ namespace dot_net_app.Service.AccountService
         }
 
         // User Registration
-        public async Task<string> CreateUserAsync(CreateUserRequest createUserRequest)
+        public async Task<User> CreateUserAsync(CreateUserRequest createUserRequest)
         {
             if (!createUserRequest.IsValid())
             {
@@ -170,7 +170,7 @@ namespace dot_net_app.Service.AccountService
                 await _emailService.SendEmailAsync(user.FullName, user.Email, EmailSubject, HtmlBody);
             }
 
-            return await Task.FromResult(otp);
+            return user;
         }
 
         // User Login

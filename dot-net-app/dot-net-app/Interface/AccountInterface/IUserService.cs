@@ -14,7 +14,7 @@ namespace dot_net_app.Interface.AccountInterface
         Task<bool> VerifyOtp(string username, string otp);
 
         // User Registration
-        Task<string> CreateUserAsync(CreateUserRequest createUserRequest);
+        Task<User> CreateUserAsync(CreateUserRequest createUserRequest);
 
         // User Login
         Task<User?> GetUserByUsernameAndPasswordAsync(string usernameOrEmail, string password);
