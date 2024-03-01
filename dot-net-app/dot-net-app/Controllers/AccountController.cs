@@ -1,5 +1,6 @@
 ﻿using dot_net_app.Interface.AccountInterface;
 using dot_net_app.Model.AccountModel;
+using dot_net_app.Model.Shared;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,16 +8,10 @@ namespace dot_net_app.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class AccountController(IUserRepository userRepository, IUserService userService) : ControllerBase
     {
-        private readonly IUserRepository _userRepository;
-        private readonly IUserService _userService;
-
-        public AccountController(IUserRepository userRepository, IUserService userService)
-        {
-            _userRepository = userRepository;
-            _userService = userService;
-        }
+        private readonly IUserRepository _userRepository = userRepository;
+        private readonly IUserService _userService = userService;
 
         // GET: api/account/users
         [HttpGet("users")]
@@ -30,6 +25,34 @@ namespace dot_net_app.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        // POST: api/account/verify-otp
+        [HttpPost("verify-otp")]
+        public async Task<IActionResult> VerifyOTP([FromBody] VerifyOtpRequest verifyOtpRequest)
+        {
+            try
+            {
+                if (verifyOtpRequest == null || string.IsNullOrWhiteSpace(verifyOtpRequest.Username) || string.IsNullOrWhiteSpace(verifyOtpRequest.Otp))
+                {
+                    return BadRequest("Username and OTP are required.");
+                }
+
+                bool isOTPVerified = await _userService.VerifyOtp(verifyOtpRequest.Username, verifyOtpRequest.Otp);
+
+                if (isOTPVerified)
+                {
+                    return Ok(new { message = "OTP verification successful" });
+                }
+                else
+                {
+                    return BadRequest(new { message = "Invalid OTP" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"An error occurred while verifying OTP: {ex}" });
             }
         }
 

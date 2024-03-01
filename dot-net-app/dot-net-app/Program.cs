@@ -1,15 +1,30 @@
 using dot_net_app.Data;
 using dot_net_app.Interface.AccountInterface;
+using dot_net_app.Interface.EmailServiceInterface;
+using dot_net_app.Model.EmailsService;
 using dot_net_app.Service.AccountService;
+using dot_net_app.Service.EmailsService;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var Configuration = builder.Configuration;
 
 // Add services to the container.
 
 // Add DbContext
 builder.Services.AddDbContext<AccountDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Email Sending
+var smtpSettings = Configuration.GetSection("SmtpSettings").Get<SmtpSettings>();
+if (smtpSettings != null)
+{
+    builder.Services.AddSingleton(smtpSettings);
+    builder.Services.AddTransient<IEmailService, EmailsService>();
+}
+
+// Add Memory Cache
+builder.Services.AddMemoryCache();
 
 // Add Interfaces
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -35,7 +50,7 @@ app.UseCors(builder =>
     builder.WithOrigins("http://localhost:3000")
            .AllowAnyMethod()
            .AllowAnyHeader()
-           .AllowCredentials(); // If you're using credentials (cookies, headers) in your requests
+           .AllowCredentials();
 });
 
 app.UseHttpsRedirection();

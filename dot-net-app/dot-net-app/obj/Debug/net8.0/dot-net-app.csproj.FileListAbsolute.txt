@@ -39,3 +39,6 @@ E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Npgsql.
 E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Serilog.dll
 E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\BCrypt.Net.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\MailKit.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\MimeKit.dll
