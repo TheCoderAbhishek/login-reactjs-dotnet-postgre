@@ -86,6 +86,7 @@ const Registration = () => {
           gender: '',
           dateOfBirth: ''
         });
+        <Link to="/login">Login</Link>
       } else {
         throw new Error('Registration failed');
       }
