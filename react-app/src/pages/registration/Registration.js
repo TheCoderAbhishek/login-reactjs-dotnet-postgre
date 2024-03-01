@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Registration = () => {
   const [formData, setFormData] = useState({
@@ -19,11 +20,12 @@ const Registration = () => {
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     let error = '';
-  
+
     switch (name) {
       case 'username':
         error = value.trim() ? (value.length < 3 ? 'Username must be at least 3 characters long' : '') : 'Username is required';
@@ -33,7 +35,7 @@ const Registration = () => {
         break;
       case 'passwordHash':
         error = value.trim() ? (value.length < 6 ? 'Password must be at least 6 characters long' : '') : 'Password is required';
-        
+
         setErrors({ ...errors, confirmPassword: value !== formData.confirmPasswordHash ? "Passwords don't match" : '' });
         break;
       case 'confirmPasswordHash':
@@ -54,7 +56,7 @@ const Registration = () => {
       default:
         break;
     }
-  
+
     setErrors({ ...errors, [name]: error });
     setFormData({ ...formData, [name]: value });
   };
@@ -72,7 +74,7 @@ const Registration = () => {
     }
     try {
       const response = await axios.post('https://localhost:44354/api/Account/register', formData);
-  
+
       if (response.status === 200 || response.status === 201) {
         setSuccessMessage('Registration successful');
         setErrors({});
@@ -86,19 +88,23 @@ const Registration = () => {
           gender: '',
           dateOfBirth: ''
         });
-        <Link to="/login">Login</Link>
+      } else {
+        throw new Error('Registration failed');
+      }
+      if (response.status === 200 || response.status === 201) {
+        navigate('/login?successMessage=You%20have%20successfully%20registered.%20Please%20log%20in.');
       } else {
         throw new Error('Registration failed');
       }
     } catch (error) {
-        console.error('Registration error:', error);
+      console.error('Registration error:', error);
       if (error.response) {
         console.error('Server response:', error.response.data);
       }
       setErrors({ general: 'Registration failed. Please try again later.' });
     }
   };
-  
+
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
