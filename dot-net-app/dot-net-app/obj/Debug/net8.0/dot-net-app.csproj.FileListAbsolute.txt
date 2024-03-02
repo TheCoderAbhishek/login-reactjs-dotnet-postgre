@@ -38,7 +38,9 @@ E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Newtons
 E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Npgsql.dll
 E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Serilog.dll
-E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\BCrypt.Net.dll
 E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
 E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\MailKit.dll
 E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\MimeKit.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Konscious.Security.Cryptography.Argon2.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Konscious.Security.Cryptography.Argon2.StrongNamed.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Konscious.Security.Cryptography.Blake2.dll

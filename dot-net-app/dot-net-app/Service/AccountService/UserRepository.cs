@@ -2,16 +2,20 @@
 using dot_net_app.Interface.AccountInterface;
 using dot_net_app.Model.AccountModel;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
+using Konscious.Security.Cryptography;
 
 namespace dot_net_app.Service.AccountService
 {
     public class UserRepository : IUserRepository
     {
         private readonly AccountDbContext _accountDbContext;
+        private readonly IConfiguration _configuration;
 
-        public UserRepository(AccountDbContext accountDbContext)
+        public UserRepository(AccountDbContext accountDbContext, IConfiguration configuration)
         {
             _accountDbContext = accountDbContext;
+            _configuration = configuration;
         }
 
         public async Task<User> GetUserByIdAsync(int userId)
@@ -76,8 +80,26 @@ namespace dot_net_app.Service.AccountService
                 user.IsAdmin = true;
             }
 
-            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.PasswordHash);
-            user.PasswordHash = hashedPassword;
+            string? saltBase64 = _configuration["Argon2Settings:Salt"];
+
+            if (saltBase64 == null)
+            {
+                throw new InvalidOperationException("Salt not found in configuration.");
+            }
+
+            byte[] salt = Convert.FromBase64String(saltBase64);
+
+            if (user.Username != null)
+            {
+                using (var argon2 = new Argon2id(Encoding.UTF8.GetBytes(user.Username)))
+                {
+                    argon2.Salt = salt;
+                    argon2.DegreeOfParallelism = 4;
+                    argon2.MemorySize = 4096;
+                    argon2.Iterations = 3;
+                    user.PasswordHash = Convert.ToBase64String(argon2.GetBytes(32));
+                }
+            }
 
             user.CreatedAt = DateTime.UtcNow;
             user.UpdatedAt = DateTime.UtcNow;
