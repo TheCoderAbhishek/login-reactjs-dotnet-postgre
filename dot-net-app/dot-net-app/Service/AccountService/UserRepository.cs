@@ -68,6 +68,21 @@ namespace dot_net_app.Service.AccountService
         // User Registration
         public async Task<User?> CreateUserAsync(User user)
         {
+            if (user.DateOfBirth.HasValue)
+            {
+                user.DateOfBirth = user.DateOfBirth.Value.ToUniversalTime();
+                user.IsVerified = true;
+                user.IsActive = true;
+                user.IsAdmin = true;
+            }
+
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.PasswordHash);
+            user.PasswordHash = hashedPassword;
+
+            user.CreatedAt = DateTime.UtcNow;
+            user.UpdatedAt = DateTime.UtcNow;
+            user.LastLoginAt = DateTime.UtcNow;
+
             _accountDbContext.Users.Add(user);
             await _accountDbContext.SaveChangesAsync();
             return user;

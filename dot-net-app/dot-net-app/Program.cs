@@ -43,15 +43,17 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseRouting();
+
+// Configure session middleware
+app.UseSession();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-// Configure session middleware
-app.UseSession();
 
 // Configure CORS to allow requests from the frontend origin
 app.UseCors(builder =>

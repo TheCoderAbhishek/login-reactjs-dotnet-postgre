@@ -5,6 +5,7 @@ import Footer from './components/shared/Footer.js';
 import Home from './pages/home/Home.js';
 import Login from './pages/login/Login.js';
 import Registration from './pages/registration/Registration.js';
+import OtpValidation from './pages/registration/OtpValidation.js';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registration" element={<Registration />} />
+          <Route path="/otp-validation" element={<OtpValidation />} />
         </Routes>
 
         <Footer />

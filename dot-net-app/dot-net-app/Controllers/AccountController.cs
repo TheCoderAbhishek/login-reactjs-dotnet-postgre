@@ -2,7 +2,6 @@
 using dot_net_app.Model.AccountModel;
 using dot_net_app.Model.Shared;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace dot_net_app.Controllers
 {
@@ -39,18 +38,11 @@ namespace dot_net_app.Controllers
                     return BadRequest("Username and OTP are required.");
                 }
 
-                var userDataJson = TempData["UserDataJson"] as string;
-
-                if (userDataJson == null)
-                {
-                    return BadRequest("User data not found in TempData.");
-                }
-
-                var user = JsonConvert.DeserializeObject<User>(userDataJson);
+                var user = verifyOtpRequest.User;
 
                 if (user == null)
                 {
-                    return BadRequest("User data could not be deserialized.");
+                    return BadRequest("User data not found in TempData.");
                 }
 
                 bool isOTPVerified = await _userService.VerifyOtp(verifyOtpRequest.Username, verifyOtpRequest.Otp);
@@ -78,12 +70,7 @@ namespace dot_net_app.Controllers
             try
             {
                 var userData = await _userService.CreateUserAsync(createUserRequest);
-
-                var userDataJson = JsonConvert.SerializeObject(userData);
-
-                TempData["UserDataJson"] = userDataJson;
-
-                return Ok(userData);
+                return Ok(new { message = "User created successfully", user = userData });
             }
             catch (ArgumentException ex)
             {

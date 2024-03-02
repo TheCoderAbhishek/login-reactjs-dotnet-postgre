@@ -92,7 +92,7 @@ const Registration = () => {
         throw new Error('Registration failed');
       }
       if (response.status === 200 || response.status === 201) {
-        navigate('/login?successMessage=You%20have%20successfully%20registered.%20Please%20log%20in.');
+        navigate('/otp-validation', { state: { username: formData.username, userData: formData, successMessage: 'OTP successfully sent' } });
       } else {
         throw new Error('Registration failed');
       }

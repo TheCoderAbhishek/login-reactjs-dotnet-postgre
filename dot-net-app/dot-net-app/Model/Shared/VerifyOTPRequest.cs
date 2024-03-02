@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using dot_net_app.Model.AccountModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace dot_net_app.Model.Shared
 {
@@ -9,5 +10,7 @@ namespace dot_net_app.Model.Shared
 
         [Required(ErrorMessage = "OTP is required")]
         public string? Otp { get; set; }
+
+        public User? User { get; set; }
     }
 }
