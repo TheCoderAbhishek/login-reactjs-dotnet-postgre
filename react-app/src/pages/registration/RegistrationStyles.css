@@ -1,0 +1,11 @@
+.date-picker-popper {
+    width: 100%; /* Adjust the width as needed */
+  }
+  
+  .date-picker-wrapper {
+    width: 100%; /* Adjust the width as needed */
+  }
+
+  .react-datepicker__day--today {
+    font-size: 1.2rem;
+  }

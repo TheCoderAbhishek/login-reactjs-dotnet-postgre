@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import './RegistrationStyles.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,7 +17,7 @@ const Registration = () => {
     fullName: '',
     mobileNumber: '',
     gender: '',
-    dateOfBirth: ''
+    dateOfBirth: new Date()
   });
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
@@ -50,7 +53,7 @@ const Registration = () => {
       case 'gender':
         error = value.trim() ? '' : 'Gender is required';
         break;
-      case 'dateOfBirth':
+        case 'dateOfBirth':
         error = value.trim() ? '' : 'Date of Birth is required';
         break;
       default:
@@ -59,6 +62,10 @@ const Registration = () => {
 
     setErrors({ ...errors, [name]: error });
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleDateChange = (date) => {
+    setFormData({ ...formData, dateOfBirth: date });
   };
 
   const handleSubmit = async (e) => {
@@ -136,7 +143,7 @@ const Registration = () => {
     if (!data.gender.trim()) {
       errors.gender = 'Gender is required';
     }
-    if (!data.dateOfBirth.trim()) {
+    if (!data.dateOfBirth) {
       errors.dateOfBirth = 'Date of Birth is required';
     }
     return errors;
@@ -215,14 +222,20 @@ const Registration = () => {
               <p className="text-red-500 mt-1">{errors.gender}</p>
             )}
           </div>
-          <InputField
-            type="date"
-            name="dateOfBirth"
-            value={formData.dateOfBirth}
-            onChange={handleChange}
-            placeholder="Date of Birth"
-            error={errors.dateOfBirth}
-          />
+          <div className="relative mb-8">
+            <DatePicker
+              selected={formData.dateOfBirth}
+              onChange={handleDateChange}
+              dateFormat="MM/dd/yyyy" // Set desired date format
+              placeholderText="Date of Birth"
+              className={`w-full px-4 py-2 border ${errors.dateOfBirth ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:border-indigo-500 text-sm`} // Adjust text size here
+              popperClassName="date-picker-popper" // Add custom class for popper (dropdown)
+              wrapperClassName="date-picker-wrapper" // Add custom class for the wrapper
+            />
+            {errors.dateOfBirth && (
+              <p className="text-red-500 mt-1">{errors.dateOfBirth}</p>
+            )}
+          </div>
           <button
             type="submit"
             className="w-full bg-indigo-500 text-white py-2 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600"
