@@ -25,13 +25,12 @@ const Login = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    setErrors({ ...errors, [name]: '' }); // Clear any existing error for the changed field
+    setErrors({ ...errors, [name]: '' });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic input validation
     const validationErrors = {};
     if (!formData.usernameOrEmail.trim()) {
       validationErrors.usernameOrEmail = 'Username or Email is required';
@@ -41,7 +40,7 @@ const Login = () => {
     }
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-      return; // Stop submission if there are validation errors
+      return;
     }
 
     try {
@@ -54,7 +53,6 @@ const Login = () => {
           usernameOrEmail: '',
           passwordHash: ''
         });
-        // Redirect or perform any other actions after successful login
       } else {
         setErrors({ general: 'Invalid username/email or password.' });
       }
