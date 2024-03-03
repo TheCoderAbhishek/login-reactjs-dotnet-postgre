@@ -50,8 +50,15 @@ namespace dot_net_app.Service.AccountService
         {
             if (_memoryCache.TryGetValue<string>(username, out var cachedOTP))
             {
-                _memoryCache.Remove(username);
-                return Task.FromResult(otp == cachedOTP);
+                if (cachedOTP == otp) 
+                {
+                    _memoryCache.Remove(username);
+                    return Task.FromResult(otp == cachedOTP);
+                }
+                else
+                {
+                    return Task.FromResult(false);
+                }
             }
             return Task.FromResult(false);
         }
