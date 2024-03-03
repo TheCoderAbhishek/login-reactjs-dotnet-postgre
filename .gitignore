@@ -8,3 +8,4 @@ dot-net-app/dot-net-app/bin/
 *.exe
 *.cache
 dot-net-app/dot-net-app/obj/Debug/net8.0/dot-net-app.AssemblyInfo.cs
+dot-net-app/dot-net-app/bin/Debug/net8.0/dot-net-app.dll
