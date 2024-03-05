@@ -53,6 +53,22 @@
   },
   {
     "ContainingType": "dot_net_app.Controllers.AccountController",
+    "Method": "ResendOTP",
+    "RelativePath": "api/Account/resend-otp",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "resendOtpRequest",
+        "Type": "dot_net_app.Model.Shared.ResendOtpRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "dot_net_app.Controllers.AccountController",
     "Method": "GetAllUsers",
     "RelativePath": "api/Account/users",
     "HttpMethod": "GET",

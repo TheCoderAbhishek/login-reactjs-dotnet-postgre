@@ -63,6 +63,21 @@ namespace dot_net_app.Service.AccountService
             return Task.FromResult(false);
         }
 
+        public async Task ResendOTP(string username, User userData)
+        {
+            string newOTP = GenerateOTP();
+
+            _memoryCache.Set(username, newOTP, TimeSpan.FromMinutes(10));
+
+            string emailSubject = "Resend OTP";
+            string emailBody = $"Your new OTP is: {newOTP}";
+
+            if (userData.FullName != null && userData.Email != null)
+            {
+                await _emailService.SendEmailAsync(userData.FullName, userData.Email, emailSubject, emailBody);
+            }
+        }
+
         // User Registration
         public async Task<User> CreateUserAsync(CreateUserRequest createUserRequest)
         {

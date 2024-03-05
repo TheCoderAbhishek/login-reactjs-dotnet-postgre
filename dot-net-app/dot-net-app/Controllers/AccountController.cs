@@ -7,7 +7,7 @@ namespace dot_net_app.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController(IUserRepository userRepository, IUserService userService) : Controller
+    public class AccountController(IUserRepository userRepository, IUserService userService) : ControllerBase
     {
         private readonly IUserRepository _userRepository = userRepository;
         private readonly IUserService _userService = userService;
@@ -60,6 +60,32 @@ namespace dot_net_app.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = $"An error occurred while verifying OTP: {ex}" });
+            }
+        }
+
+        // POST: api/account/resend-otp
+        [HttpPost("resend-otp")]
+        public async Task<IActionResult> ResendOTP([FromBody] ResendOtpRequest resendOtpRequest)
+        {
+            try
+            {
+                if (resendOtpRequest == null || string.IsNullOrWhiteSpace(resendOtpRequest.Username))
+                {
+                    return BadRequest("Username is required.");
+                }
+
+                var userData = resendOtpRequest.User;
+
+                if (userData is not null)
+                {
+                    await _userService.ResendOTP(resendOtpRequest.Username, userData);
+                }
+
+                return Ok(new { message = "New OTP sent successfully" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while resending OTP: {ex.Message}");
             }
         }
 

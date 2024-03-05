@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -14,11 +14,26 @@ const OtpValidation = () => {
 
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState('');
+  const [timer, setTimer] = useState(60);
+  const [showResendButton, setShowResendButton] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  useEffect(() => {
+    const countdown = setInterval(() => {
+      if (timer === 0) {
+        clearInterval(countdown);
+        setShowResendButton(true);
+      } else {
+        setTimer((prevTimer) => prevTimer - 1);
+      }
+    }, 1000);
+
+    return () => clearInterval(countdown);
+  }, [timer]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,6 +63,25 @@ const OtpValidation = () => {
     }
   };
   
+  const handleResendOTP = async () => {
+    try {
+      const response = await axios.post('https://localhost:44354/api/Account/resend-otp', {
+        username: formData.username,
+        user: location.state.userData
+      });
+
+      if (response.status === 200) {
+        setSuccessMessage('New OTP sent successfully');
+        setShowResendButton(false); // Hide the resend button again
+        setTimer(60); // Reset the timer
+      } else {
+        throw new Error('Failed to resend OTP');
+      }
+    } catch (error) {
+      console.error('Resend OTP error:', error);
+      setErrors({ general: 'Failed to resend OTP. Please try again later.' });
+    }
+  };
 
   const validateForm = (data) => {
     let errors = {};
@@ -95,6 +129,15 @@ const OtpValidation = () => {
           >
             Validate OTP
           </button>
+          {showResendButton && (
+            <button
+              onClick={handleResendOTP}
+              className="w-full bg-indigo-500 text-white py-2 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600"
+            >
+              Resend OTP
+            </button>
+          )}
+          {timer > 0 && <p className="text-gray-600 mt-2">Resend OTP in {timer} seconds</p>}
         </form>
         <p className="text-gray-600 mt-2">
           Not your account? <Link to="/registration" className="text-indigo-600">Register here</Link>

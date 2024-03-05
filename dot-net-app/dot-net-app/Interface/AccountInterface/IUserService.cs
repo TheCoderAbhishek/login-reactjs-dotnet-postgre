@@ -1,4 +1,6 @@
 ﻿using dot_net_app.Model.AccountModel;
+using dot_net_app.Model.Shared;
+using Microsoft.AspNetCore.Mvc;
 
 namespace dot_net_app.Interface.AccountInterface
 {
@@ -12,6 +14,8 @@ namespace dot_net_app.Interface.AccountInterface
 
         // OTP Verification
         Task<bool> VerifyOtp(string username, string otp);
+
+        Task ResendOTP(string username, User userData);
 
         // User Registration
         Task<User> CreateUserAsync(CreateUserRequest createUserRequest);
