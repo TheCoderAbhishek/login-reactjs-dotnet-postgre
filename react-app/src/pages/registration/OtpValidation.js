@@ -56,7 +56,7 @@ const OtpValidation = () => {
       if (response.status === 200) {
         setSuccessMessage("OTP validated successfully");
         setErrors({});
-        navigate("/login");
+        navigate(`/login?successMessage=${encodeURIComponent("OTP Validation is successful. Now, you can log in into your account.")}`);
       } else {
         throw new Error("OTP validation failed");
       }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash, faTimes } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 const Login = () => {
@@ -22,6 +22,10 @@ const Login = () => {
       setSuccessMessage(decodeURIComponent(successMessage));
     }
   }, [location]);
+
+  const clearSuccessMessage = () => {
+    setSuccessMessage("");
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -82,7 +86,15 @@ const Login = () => {
           <p className="text-red-500 mb-2">{errors.general}</p>
         )}
         {successMessage && (
-          <p className="text-green-500 mb-2">{successMessage}</p>
+          <div className="flex justify-between items-center mb-4">
+            <p className="text-green-500">{successMessage}</p>
+            <button
+              onClick={clearSuccessMessage}
+              className="text-gray-500"
+            >
+              <FontAwesomeIcon icon={faTimes} />
+            </button>
+          </div>
         )}
         <form onSubmit={handleSubmit} className="space-y-4">
           <InputField
