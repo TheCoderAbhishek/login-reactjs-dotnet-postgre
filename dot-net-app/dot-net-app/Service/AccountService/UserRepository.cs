@@ -3,14 +3,12 @@ using dot_net_app.Interface.AccountInterface;
 using dot_net_app.Model.AccountModel;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
-using Konscious.Security.Cryptography;
 
 namespace dot_net_app.Service.AccountService
 {
-    public class UserRepository(AccountDbContext accountDbContext, IConfiguration configuration) : IUserRepository
+    public class UserRepository(AccountDbContext accountDbContext) : IUserRepository
     {
         private readonly AccountDbContext _accountDbContext = accountDbContext;
-        private readonly IConfiguration _configuration = configuration;
 
         public async Task<User> GetUserByIdAsync(int userId)
         {
@@ -74,25 +72,10 @@ namespace dot_net_app.Service.AccountService
                 user.IsAdmin = true;
             }
 
-            string? saltBase64 = _configuration["Argon2Settings:Salt"];
-
-            if (saltBase64 == null)
+            // Hash the password using BCrypt
+            if (!string.IsNullOrEmpty(user.Username) && !string.IsNullOrEmpty(user.PasswordHash))
             {
-                throw new InvalidOperationException("Salt not found in configuration.");
-            }
-
-            byte[] salt = Convert.FromBase64String(saltBase64);
-
-            if (user.Username != null)
-            {
-                using (var argon2 = new Argon2id(Encoding.UTF8.GetBytes(user.Username)))
-                {
-                    argon2.Salt = salt;
-                    argon2.DegreeOfParallelism = 4;
-                    argon2.MemorySize = 4096;
-                    argon2.Iterations = 3;
-                    user.PasswordHash = Convert.ToBase64String(argon2.GetBytes(32));
-                }
+                user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(user.PasswordHash);
             }
 
             user.CreatedAt = DateTime.UtcNow;

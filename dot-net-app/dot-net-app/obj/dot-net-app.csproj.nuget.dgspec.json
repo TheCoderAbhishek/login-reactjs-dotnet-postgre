@@ -50,17 +50,13 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "Konscious.Security.Cryptography.Argon2": {
+            "BCrypt-Official": {
               "target": "Package",
-              "version": "[1.3.0, )"
-            },
-            "Konscious.Security.Cryptography.Argon2.StrongNamed": {
-              "target": "Package",
-              "version": "[1.0.4, )"
+              "version": "[0.1.109, )"
             },
             "MailKit": {
               "target": "Package",
-              "version": "[4.3.0, )"
+              "version": "[4.4.0, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",

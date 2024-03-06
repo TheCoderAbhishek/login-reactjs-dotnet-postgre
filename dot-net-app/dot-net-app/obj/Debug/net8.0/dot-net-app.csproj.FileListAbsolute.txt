@@ -41,6 +41,4 @@ E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Serilog
 E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
 E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\MailKit.dll
 E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\MimeKit.dll
-E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Konscious.Security.Cryptography.Argon2.dll
-E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Konscious.Security.Cryptography.Argon2.StrongNamed.dll
-E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Konscious.Security.Cryptography.Blake2.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\BCrypt.Net.dll

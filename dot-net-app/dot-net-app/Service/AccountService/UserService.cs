@@ -1,18 +1,15 @@
 ﻿using dot_net_app.Interface.AccountInterface;
 using dot_net_app.Interface.EmailServiceInterface;
 using dot_net_app.Model.AccountModel;
-using Konscious.Security.Cryptography;
 using Microsoft.Extensions.Caching.Memory;
-using System.Text;
 
 namespace dot_net_app.Service.AccountService
 {
-    public class UserService(IUserRepository userRepository, IMemoryCache memoryCache, IEmailService emailService, IConfiguration configuration) : IUserService
+    public class UserService(IUserRepository userRepository, IMemoryCache memoryCache, IEmailService emailService) : IUserService
     {
         private readonly IUserRepository _userRepository = userRepository;
         private readonly IMemoryCache _memoryCache = memoryCache;
         private readonly IEmailService _emailService = emailService;
-        private readonly IConfiguration _configuration = configuration;
 
         private static string GenerateOTP()
         {
@@ -88,49 +85,35 @@ namespace dot_net_app.Service.AccountService
 
             string otp = GenerateOTP();
 
-            string? saltBase64 = _configuration["Argon2Settings:Salt"];
-            if (saltBase64 == null)
+            // Hash the user's password using BCrypt
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(createUserRequest.PasswordHash);
+
+            var user = new User
             {
-                throw new InvalidOperationException("Argon2 salt configuration is missing.");
+                Username = createUserRequest.Username,
+                Email = createUserRequest.Email,
+                PasswordHash = hashedPassword,
+                FullName = createUserRequest.FullName,
+                MobileNumber = createUserRequest.MobileNumber,
+                Gender = createUserRequest.Gender,
+                DateOfBirth = createUserRequest.DateOfBirth?.ToUniversalTime(),
+                IsAdmin = true,
+                IsActive = true,
+                IsVerified = true,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+                LastLoginAt = DateTime.UtcNow
+            };
+
+            // Set OTP in memory cache
+            if (user.Username != null)
+            {
+                _memoryCache.Set(user.Username, otp, TimeSpan.FromMinutes(10));
             }
 
-            byte[] salt = Convert.FromBase64String(saltBase64);
-
-            using (var argon2 = new Argon2id(Encoding.UTF8.GetBytes(createUserRequest.PasswordHash ?? "")))
-            {
-                argon2.Salt = salt;
-                argon2.DegreeOfParallelism = 4;
-                argon2.MemorySize = 4096;
-                argon2.Iterations = 3;
-
-                string hashedPassword = Convert.ToBase64String(argon2.GetBytes(32));
-
-                var user = new User
-                {
-                    Username = createUserRequest.Username,
-                    Email = createUserRequest.Email,
-                    PasswordHash = hashedPassword,
-                    FullName = createUserRequest.FullName,
-                    MobileNumber = createUserRequest.MobileNumber,
-                    Gender = createUserRequest.Gender,
-                    DateOfBirth = createUserRequest.DateOfBirth?.ToUniversalTime(),
-                    IsAdmin = true,
-                    IsActive = true,
-                    IsVerified = true,
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow,
-                    LastLoginAt = DateTime.UtcNow
-                };
-
-                // Set OTP in memory cache
-                if (user.Username != null)
-                {
-                    _memoryCache.Set(user.Username, otp, TimeSpan.FromMinutes(10));
-                }
-
-                // Email subject and body
-                string emailSubject = "OTP Verification";
-                string HtmlBody = @"
+            // Email subject and body
+            string emailSubject = "OTP Verification";
+            string HtmlBody = @"
             <!DOCTYPE html>
             <html lang=""en"">
             <head>
@@ -194,7 +177,7 @@ namespace dot_net_app.Service.AccountService
                 <h1>Welcome to Our Website!</h1>
                 <p>Thank you for registering. Your One-Time Password (OTP) is:</p>
                 <div class=""otp"">" + otp +
-                @"</div>
+            @"</div>
                 <p>Please use this OTP to complete your registration.</p>
 
                 <p class=""social-link"">
@@ -206,14 +189,13 @@ namespace dot_net_app.Service.AccountService
             </body>
             </html>";
 
-                // Send email
-                if (user.Email != null && user.FullName != null)
-                {
-                    await _emailService.SendEmailAsync(user.FullName, user.Email, emailSubject, HtmlBody);
-                }
-
-                return user;
+            // Send email
+            if (user.Email != null && user.FullName != null)
+            {
+                await _emailService.SendEmailAsync(user.FullName, user.Email, emailSubject, HtmlBody);
             }
+
+            return user;
         }
 
         // User Login
@@ -223,26 +205,12 @@ namespace dot_net_app.Service.AccountService
 
             if (user != null)
             {
-                string? saltBase64 = _configuration["Argon2Settings:Salt"];
+                // Verify the password using BCrypt
+                bool isPasswordCorrect = BCrypt.Net.BCrypt.Verify(password, user.PasswordHash);
 
-                if (saltBase64 != null)
+                if (isPasswordCorrect)
                 {
-                    byte[] salt = Convert.FromBase64String(saltBase64);
-
-                    using (var argon2 = new Argon2id(Encoding.UTF8.GetBytes(password)))
-                    {
-                        argon2.Salt = salt;
-                        argon2.DegreeOfParallelism = 4;
-                        argon2.MemorySize = 4096;
-                        argon2.Iterations = 3;
-
-                        string hashedPassword = Convert.ToBase64String(argon2.GetBytes(32));
-
-                        if (hashedPassword == user.PasswordHash)
-                        {
-                            return user;
-                        }
-                    }
+                    return user;
                 }
             }
 
