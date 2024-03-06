@@ -1,20 +1,21 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Dialog, Popover } from '@headlessui/react';
-import {
-  Bars3Icon,
-  XMarkIcon,
-} from '@heroicons/react/24/outline';
-import { Link } from 'react-router-dom';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const isLoggedIn = location.pathname === "/dashboard";
 
   return (
     <header className="bg-white">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
           <div className="text-sm font-semibold leading-6 text-gray-900">
-            <Link to="/" className="text-grey-900"><img className="h-8 w-auto" src="/assets/logo.svg" alt="" /></Link>
+            <Link to="/" className="text-grey-900">
+              <img className="h-8 w-auto" src="/assets/logo.svg" alt="" />
+            </Link>
           </div>
         </div>
         <div className="flex lg:hidden">
@@ -28,7 +29,6 @@ export default function Header() {
           </button>
         </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
-          
           <a href="https://www.google.com/" className="text-sm font-semibold leading-6 text-gray-900">
             Features
           </a>
@@ -40,9 +40,15 @@ export default function Header() {
           </a>
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <div className="text-sm font-semibold leading-6 text-gray-900">
-            <Link to="/login" className="text-grey-900">Log in <span aria-hidden="true">&rarr;</span></Link>
-          </div>
+          {isLoggedIn ? (
+            <div className="text-sm font-semibold leading-6 text-gray-900">
+              <Link to="/dashboard" className="text-grey-900">Username</Link>
+            </div>
+          ) : (
+            <div className="text-sm font-semibold leading-6 text-gray-900">
+              <Link to="/login" className="text-grey-900">Log in <span aria-hidden="true">&rarr;</span></Link>
+            </div>
+          )}
         </div>
       </nav>
       <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
@@ -89,17 +95,26 @@ export default function Header() {
                 </a>
               </div>
               <div className="py-6">
-                <a
-                  href="https://www.google.com/"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Log in
-                </a>
+                {isLoggedIn ? (
+                  <a
+                    href="https://www.google.com/"
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >
+                    Username
+                  </a>
+                ) : (
+                  <a
+                    href="https://www.google.com/"
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >
+                    Log in
+                  </a>
+                )}
               </div>
             </div>
           </div>
         </Dialog.Panel>
       </Dialog>
     </header>
-  )
+  );
 }

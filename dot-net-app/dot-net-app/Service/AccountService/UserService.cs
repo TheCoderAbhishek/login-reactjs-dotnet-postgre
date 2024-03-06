@@ -229,21 +229,18 @@ namespace dot_net_app.Service.AccountService
                 {
                     byte[] salt = Convert.FromBase64String(saltBase64);
 
-                    if (user.Username is not null)
+                    using (var argon2 = new Argon2id(Encoding.UTF8.GetBytes(password)))
                     {
-                        using (var argon2 = new Argon2id(Encoding.UTF8.GetBytes(user.Username)))
+                        argon2.Salt = salt;
+                        argon2.DegreeOfParallelism = 4;
+                        argon2.MemorySize = 4096;
+                        argon2.Iterations = 3;
+
+                        string hashedPassword = Convert.ToBase64String(argon2.GetBytes(32));
+
+                        if (hashedPassword == user.PasswordHash)
                         {
-                            argon2.Salt = salt;
-                            argon2.DegreeOfParallelism = 4;
-                            argon2.MemorySize = 4096;
-                            argon2.Iterations = 3;
-
-                            string hashedPassword = Convert.ToBase64String(argon2.GetBytes(32));
-
-                            if (hashedPassword == user.PasswordHash)
-                            {
-                                return user;
-                            }
+                            return user;
                         }
                     }
                 }

@@ -104,10 +104,18 @@ namespace dot_net_app.Service.AccountService
             return user;
         }
 
-        // User Login
+        // User Retrieval by Username or Email
         public async Task<User?> GetUserByUsernameOrEmailAsync(string usernameOrEmail)
         {
-            return await _accountDbContext.Users.FirstOrDefaultAsync(u => u.Username == usernameOrEmail || u.Email == usernameOrEmail);
+            try
+            {
+                return await _accountDbContext.Users.FirstOrDefaultAsync(u => u.Username == usernameOrEmail || u.Email == usernameOrEmail);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while retrieving user by username/email: {ex.Message}");
+                return null;
+            }
         }
     }
 }
