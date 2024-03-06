@@ -1,60 +1,86 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import './RegistrationStyles.css';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "./RegistrationStyles.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Registration = () => {
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    passwordHash: '',
-    confirmPasswordHash: '',
-    fullName: '',
-    mobileNumber: '',
-    gender: '',
-    dateOfBirth: new Date()
+    username: "",
+    email: "",
+    passwordHash: "",
+    confirmPasswordHash: "",
+    fullName: "",
+    mobileNumber: "",
+    gender: "",
+    dateOfBirth: new Date(),
   });
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [errors, setErrors] = useState({});
-  const [successMessage, setSuccessMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    let error = '';
+    let error = "";
 
     switch (name) {
-      case 'username':
-        error = value.trim() ? (value.length < 3 ? 'Username must be at least 3 characters long' : '') : 'Username is required';
+      case "username":
+        error = value.trim()
+          ? value.length < 3
+            ? "Username must be at least 3 characters long"
+            : ""
+          : "Username is required";
         break;
-      case 'email':
-        error = value.trim() ? (/^\S+@\S+\.\S+$/.test(value) ? '' : 'Invalid email address') : 'Email is required';
+      case "email":
+        error = value.trim()
+          ? /^\S+@\S+\.\S+$/.test(value)
+            ? ""
+            : "Invalid email address"
+          : "Email is required";
         break;
-      case 'passwordHash':
-        error = value.trim() ? (value.length < 6 ? 'Password must be at least 6 characters long' : '') : 'Password is required';
+      case "passwordHash":
+        error = value.trim()
+          ? value.length < 6
+            ? "Password must be at least 6 characters long"
+            : ""
+          : "Password is required";
 
-        setErrors({ ...errors, confirmPassword: value !== formData.confirmPasswordHash ? "Passwords don't match" : '' });
+        setErrors({
+          ...errors,
+          confirmPassword:
+            value !== formData.confirmPasswordHash
+              ? "Passwords don't match"
+              : "",
+        });
         break;
-      case 'confirmPasswordHash':
-        error = value.trim() ? (value !== formData.passwordHash ? "Passwords don't match" : '') : 'Confirm Password is required';
+      case "confirmPasswordHash":
+        error = value.trim()
+          ? value !== formData.passwordHash
+            ? "Passwords don't match"
+            : ""
+          : "Confirm Password is required";
         break;
-      case 'fullName':
-        error = value.trim() ? '' : 'Full Name is required';
+      case "fullName":
+        error = value.trim() ? "" : "Full Name is required";
         break;
-      case 'mobileNumber':
-        error = value.trim() ? (/^\d{10}$/.test(value) ? '' : 'Invalid mobile number') : 'Mobile Number is required';
+      case "mobileNumber":
+        error = value.trim()
+          ? /^\d{10}$/.test(value)
+            ? ""
+            : "Invalid mobile number"
+          : "Mobile Number is required";
         break;
-      case 'gender':
-        error = value.trim() ? '' : 'Gender is required';
+      case "gender":
+        error = value.trim() ? "" : "Gender is required";
         break;
-        case 'dateOfBirth':
-        error = value.trim() ? '' : 'Date of Birth is required';
+      case "dateOfBirth":
+        error = value.trim() ? "" : "Date of Birth is required";
         break;
       default:
         break;
@@ -80,35 +106,44 @@ const Registration = () => {
       return;
     }
     try {
-      const response = await axios.post('https://localhost:44354/api/Account/register', formData);
+      const response = await axios.post(
+        "https://localhost:44354/api/Account/register",
+        formData
+      );
 
       if (response.status === 200 || response.status === 201) {
-        setSuccessMessage('Registration successful');
+        setSuccessMessage("Registration successful");
         setErrors({});
         setFormData({
-          username: '',
-          email: '',
-          passwordHash: '',
-          confirmPasswordHash: '',
-          fullName: '',
-          mobileNumber: '',
-          gender: '',
-          dateOfBirth: ''
+          username: "",
+          email: "",
+          passwordHash: "",
+          confirmPasswordHash: "",
+          fullName: "",
+          mobileNumber: "",
+          gender: "",
+          dateOfBirth: "",
         });
       } else {
-        throw new Error('Registration failed');
+        throw new Error("Registration failed");
       }
       if (response.status === 200 || response.status === 201) {
-        navigate('/otp-validation', { state: { username: formData.username, userData: formData, successMessage: 'OTP successfully sent' } });
+        navigate("/otp-validation", {
+          state: {
+            username: formData.username,
+            userData: formData,
+            successMessage: "OTP successfully sent",
+          },
+        });
       } else {
-        throw new Error('Registration failed');
+        throw new Error("Registration failed");
       }
     } catch (error) {
-      console.error('Registration error:', error);
+      console.error("Registration error:", error);
       if (error.response) {
-        console.error('Server response:', error.response.data);
+        console.error("Server response:", error.response.data);
       }
-      setErrors({ general: 'Registration failed. Please try again later.' });
+      setErrors({ general: "Registration failed. Please try again later." });
     }
   };
 
@@ -123,28 +158,28 @@ const Registration = () => {
   const validateForm = (data) => {
     let errors = {};
     if (!data.username.trim()) {
-      errors.username = 'Username is required';
+      errors.username = "Username is required";
     }
     if (!data.email.trim()) {
-      errors.email = 'Email is required';
+      errors.email = "Email is required";
     }
     if (!data.passwordHash.trim()) {
-      errors.password = 'Password is required';
+      errors.password = "Password is required";
     }
     if (!data.confirmPasswordHash.trim()) {
-      errors.confirmPassword = 'Confirm Password is required';
+      errors.confirmPassword = "Confirm Password is required";
     }
     if (!data.fullName.trim()) {
-      errors.fullName = 'Full Name is required';
+      errors.fullName = "Full Name is required";
     }
     if (!data.mobileNumber.trim()) {
-      errors.mobileNumber = 'Mobile Number is required';
+      errors.mobileNumber = "Mobile Number is required";
     }
     if (!data.gender.trim()) {
-      errors.gender = 'Gender is required';
+      errors.gender = "Gender is required";
     }
     if (!data.dateOfBirth) {
-      errors.dateOfBirth = 'Date of Birth is required';
+      errors.dateOfBirth = "Date of Birth is required";
     }
     return errors;
   };
@@ -153,8 +188,12 @@ const Registration = () => {
     <div className="flex flex-col items-center justify-center min-h-screen py-8">
       <h2 className="text-3xl font-semibold mb-8">Registration Page</h2>
       <div className="w-full max-w-xs border border-gray-300 rounded-md p-4">
-        {errors.general && <p className="text-red-500 mb-4">{errors.general}</p>}
-        {successMessage && <p className="text-green-500 mb-4">{successMessage}</p>}
+        {errors.general && (
+          <p className="text-red-500 mb-4">{errors.general}</p>
+        )}
+        {successMessage && (
+          <p className="text-green-500 mb-4">{successMessage}</p>
+        )}
         <form onSubmit={handleSubmit} className="space-y-4">
           <InputField
             type="text"
@@ -211,7 +250,9 @@ const Registration = () => {
               name="gender"
               value={formData.gender}
               onChange={handleChange}
-              className={`w-full px-4 py-2 border ${errors.gender ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:border-indigo-500`}
+              className={`w-full px-4 py-2 border ${
+                errors.gender ? "border-red-500" : "border-gray-300"
+              } rounded-md focus:outline-none focus:border-indigo-500`}
             >
               <option value="">Select Gender</option>
               <option value="male">Male</option>
@@ -228,7 +269,9 @@ const Registration = () => {
               onChange={handleDateChange}
               dateFormat="MM/dd/yyyy" // Set desired date format
               placeholderText="Date of Birth"
-              className={`w-full px-4 py-2 border ${errors.dateOfBirth ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:border-indigo-500 text-sm`} // Adjust text size here
+              className={`w-full px-4 py-2 border ${
+                errors.dateOfBirth ? "border-red-500" : "border-gray-300"
+              } rounded-md focus:outline-none focus:border-indigo-500 text-sm`} // Adjust text size here
               popperClassName="date-picker-popper" // Add custom class for popper (dropdown)
               wrapperClassName="date-picker-wrapper" // Add custom class for the wrapper
             />
@@ -244,7 +287,10 @@ const Registration = () => {
           </button>
         </form>
         <p className="text-gray-600 mt-2">
-          Already registered? <Link to="/login" className="text-indigo-600">Log in here</Link>
+          Already registered?{" "}
+          <Link to="/login" className="text-indigo-600">
+            Log in here
+          </Link>
         </p>
       </div>
     </div>
@@ -259,22 +305,34 @@ const InputField = ({ type, name, value, onChange, placeholder, error }) => (
       value={value}
       onChange={onChange}
       placeholder={placeholder}
-      className={`w-full px-4 py-2 border ${error ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:border-indigo-500`}
+      className={`w-full px-4 py-2 border ${
+        error ? "border-red-500" : "border-gray-300"
+      } rounded-md focus:outline-none focus:border-indigo-500`}
     />
     {error && <p className="text-red-500 mt-1">{error}</p>}
   </div>
 );
 
-const PasswordInputField = ({ name, value, onChange, placeholder, error, visible, toggleVisibility }) => (
+const PasswordInputField = ({
+  name,
+  value,
+  onChange,
+  placeholder,
+  error,
+  visible,
+  toggleVisibility,
+}) => (
   <div className="relative mb-4">
     <div className="relative">
       <input
-        type={visible ? 'text' : 'password'}
+        type={visible ? "text" : "password"}
         name={name}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className={`w-full px-4 py-2 pr-10 border ${error ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:border-indigo-500`}
+        className={`w-full px-4 py-2 pr-10 border ${
+          error ? "border-red-500" : "border-gray-300"
+        } rounded-md focus:outline-none focus:border-indigo-500`}
       />
       <span
         className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer"

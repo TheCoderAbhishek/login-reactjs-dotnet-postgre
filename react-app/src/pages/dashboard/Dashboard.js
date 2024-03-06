@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
 const Dashboard = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-8">
       <h2 className="text-3xl font-semibold mb-4">Welcome to Your Dashboard</h2>
-      
+
       {/* Quick Stats */}
       <div className="w-full max-w-3xl grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         <div className="bg-white p-6 rounded-lg shadow-md">
@@ -20,10 +20,12 @@ const Dashboard = () => {
           <p className="text-xl">$10,000</p>
         </div>
       </div>
-      
+
       {/* Recent Orders */}
       <div className="w-full max-w-3xl bg-white rounded-lg shadow-md">
-        <h3 className="text-lg font-semibold bg-gray-200 px-6 py-4 border-b">Recent Orders</h3>
+        <h3 className="text-lg font-semibold bg-gray-200 px-6 py-4 border-b">
+          Recent Orders
+        </h3>
         <div className="p-6">
           <ul>
             <li className="flex justify-between items-center py-2 border-b">
@@ -41,10 +43,12 @@ const Dashboard = () => {
           </ul>
         </div>
       </div>
-      
+
       {/* Recent Activity */}
       <div className="w-full max-w-3xl bg-white rounded-lg shadow-md mt-8">
-        <h3 className="text-lg font-semibold bg-gray-200 px-6 py-4 border-b">Recent Activity</h3>
+        <h3 className="text-lg font-semibold bg-gray-200 px-6 py-4 border-b">
+          Recent Activity
+        </h3>
         <div className="p-6">
           <ul>
             <li className="flex justify-between items-center py-2 border-b">

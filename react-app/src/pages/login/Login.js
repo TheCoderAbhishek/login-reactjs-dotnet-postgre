@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    usernameOrEmail: '',
-    passwordHash: ''
+    usernameOrEmail: "",
+    passwordHash: "",
   });
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [errors, setErrors] = useState({});
-  const [successMessage, setSuccessMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
-    const successMessage = searchParams.get('successMessage');
+    const successMessage = searchParams.get("successMessage");
     if (successMessage) {
       setSuccessMessage(decodeURIComponent(successMessage));
     }
@@ -26,7 +26,7 @@ const Login = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    setErrors({ ...errors, [name]: '' });
+    setErrors({ ...errors, [name]: "" });
   };
 
   const handleSubmit = async (e) => {
@@ -34,10 +34,10 @@ const Login = () => {
 
     const validationErrors = {};
     if (!formData.usernameOrEmail.trim()) {
-      validationErrors.usernameOrEmail = 'Username or Email is required';
+      validationErrors.usernameOrEmail = "Username or Email is required";
     }
     if (!formData.passwordHash.trim()) {
-      validationErrors.passwordHash = 'Password is required';
+      validationErrors.passwordHash = "Password is required";
     }
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -45,27 +45,30 @@ const Login = () => {
     }
 
     try {
-      const response = await axios.post('https://localhost:44354/api/Account/login', formData);
-  
+      const response = await axios.post(
+        "https://localhost:44354/api/Account/login",
+        formData
+      );
+
       if (response.status === 200) {
-        setSuccessMessage('Login successful');
+        setSuccessMessage("Login successful");
         setErrors({});
         setFormData({
-          usernameOrEmail: '',
-          passwordHash: ''
+          usernameOrEmail: "",
+          passwordHash: "",
         });
-        navigate('/dashboard');
+        navigate("/dashboard");
       } else {
-        setErrors({ general: 'Invalid username/email or password.' });
+        setErrors({ general: "Invalid username/email or password." });
       }
     } catch (error) {
-      console.error('Login error:', error);
+      console.error("Login error:", error);
       if (error.response) {
-        console.error('Server response:', error.response.data);
+        console.error("Server response:", error.response.data);
       }
-      setErrors({ general: 'Login failed. Please try again later.' });
+      setErrors({ general: "Login failed. Please try again later." });
     }
-  };  
+  };
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -75,8 +78,12 @@ const Login = () => {
     <div className="flex flex-col items-center justify-center min-h-screen py-8">
       <h2 className="text-3xl font-semibold mb-8">Login Page</h2>
       <div className="w-full max-w-xs border border-gray-300 rounded-md p-4">
-        {errors.general && <p className="text-red-500 mb-2">{errors.general}</p>}
-        {successMessage && <p className="text-green-500 mb-2">{successMessage}</p>}
+        {errors.general && (
+          <p className="text-red-500 mb-2">{errors.general}</p>
+        )}
+        {successMessage && (
+          <p className="text-green-500 mb-2">{successMessage}</p>
+        )}
         <form onSubmit={handleSubmit} className="space-y-4">
           <InputField
             type="text"
@@ -103,7 +110,10 @@ const Login = () => {
           </button>
         </form>
         <p className="text-gray-600 mt-2">
-          Not registered? <Link to="/registration" className="text-indigo-600">Register here</Link>
+          Not registered?{" "}
+          <Link to="/registration" className="text-indigo-600">
+            Register here
+          </Link>
         </p>
       </div>
     </div>
@@ -118,22 +128,34 @@ const InputField = ({ type, name, value, onChange, placeholder, error }) => (
       value={value}
       onChange={onChange}
       placeholder={placeholder}
-      className={`w-full px-4 py-2 border ${error ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:border-indigo-500`}
+      className={`w-full px-4 py-2 border ${
+        error ? "border-red-500" : "border-gray-300"
+      } rounded-md focus:outline-none focus:border-indigo-500`}
     />
     {error && <p className="text-red-500 mt-1">{error}</p>}
   </div>
 );
 
-const PasswordInputField = ({ name, value, onChange, placeholder, error, visible, toggleVisibility }) => (
+const PasswordInputField = ({
+  name,
+  value,
+  onChange,
+  placeholder,
+  error,
+  visible,
+  toggleVisibility,
+}) => (
   <div className="relative mb-4">
     <div className="relative">
       <input
-        type={visible ? 'text' : 'password'}
+        type={visible ? "text" : "password"}
         name={name}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className={`w-full px-4 py-2 pr-10 border ${error ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:border-indigo-500`}
+        className={`w-full px-4 py-2 pr-10 border ${
+          error ? "border-red-500" : "border-gray-300"
+        } rounded-md focus:outline-none focus:border-indigo-500`}
       />
       <span
         className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer"
