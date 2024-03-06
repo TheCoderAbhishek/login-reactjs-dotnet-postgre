@@ -19,7 +19,7 @@ builder.Services.AddSession();
 
 // Add DbContext
 builder.Services.AddDbContext<AccountDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
 // Email Sending
 var smtpSettings = Configuration.GetSection("SmtpSettings").Get<SmtpSettings>();

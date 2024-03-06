@@ -1,6 +1,4 @@
 ﻿using dot_net_app.Model.AccountModel;
-using dot_net_app.Model.Shared;
-using Microsoft.AspNetCore.Mvc;
 
 namespace dot_net_app.Interface.AccountInterface
 {

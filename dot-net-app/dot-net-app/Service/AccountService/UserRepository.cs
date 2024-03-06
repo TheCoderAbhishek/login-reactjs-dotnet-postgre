@@ -7,16 +7,10 @@ using Konscious.Security.Cryptography;
 
 namespace dot_net_app.Service.AccountService
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository(AccountDbContext accountDbContext, IConfiguration configuration) : IUserRepository
     {
-        private readonly AccountDbContext _accountDbContext;
-        private readonly IConfiguration _configuration;
-
-        public UserRepository(AccountDbContext accountDbContext, IConfiguration configuration)
-        {
-            _accountDbContext = accountDbContext;
-            _configuration = configuration;
-        }
+        private readonly AccountDbContext _accountDbContext = accountDbContext;
+        private readonly IConfiguration _configuration = configuration;
 
         public async Task<User> GetUserByIdAsync(int userId)
         {
