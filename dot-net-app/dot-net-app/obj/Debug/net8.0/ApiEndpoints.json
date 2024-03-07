@@ -21,6 +21,16 @@
   },
   {
     "ContainingType": "dot_net_app.Controllers.AccountController",
+    "Method": "GetAllUsers",
+    "RelativePath": "api/Account/getAllUsers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "dot_net_app.Controllers.AccountController",
     "Method": "Login",
     "RelativePath": "api/Account/login",
     "HttpMethod": "POST",
@@ -65,16 +75,6 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "dot_net_app.Controllers.AccountController",
-    "Method": "GetAllUsers",
-    "RelativePath": "api/Account/users",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
     "ReturnTypes": []
   },
   {

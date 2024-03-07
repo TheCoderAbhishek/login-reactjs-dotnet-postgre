@@ -14,7 +14,7 @@ namespace dot_net_app.Controllers
         private readonly ILogger<AccountController> _logger = logger;
 
         // GET: api/account/users
-        [HttpGet("users")]
+        [HttpGet("getAllUsers")]
         public async Task<IActionResult> GetAllUsers()
         {
             try
