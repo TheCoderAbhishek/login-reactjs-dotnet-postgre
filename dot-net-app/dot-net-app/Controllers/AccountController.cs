@@ -117,12 +117,14 @@ namespace dot_net_app.Controllers
             {
                 if (userLoginRequest == null || string.IsNullOrWhiteSpace(userLoginRequest.UsernameOrEmail) || string.IsNullOrWhiteSpace(userLoginRequest.PasswordHash))
                 {
+                    _logger.LogError("Username/email and password are empty or null.");
                     return BadRequest("Username/email and password are required.");
                 }
 
                 var user = await _userService.GetUserByUsernameAndPasswordAsync(userLoginRequest.UsernameOrEmail, userLoginRequest.PasswordHash);
                 if (user == null)
                 {
+                    _logger.LogError($"Invalid username/email or password provided for user {userLoginRequest.UsernameOrEmail}.");
                     return Unauthorized("Invalid username/email or password.");
                 }
                 _logger.LogInformation("User successfully logged into application with valid credentials.");
