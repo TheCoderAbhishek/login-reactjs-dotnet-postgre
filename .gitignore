@@ -1,5 +1,5 @@
 .vs/
-dot-net-app/dot-net-app/log/
+dot-net-app/dot-net-app/logs/
 dot-net-app/dot-net-app/obj/
 dot-net-app/dot-net-app/bin/
 *.dll

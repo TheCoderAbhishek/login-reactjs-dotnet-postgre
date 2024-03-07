@@ -7,10 +7,11 @@ namespace dot_net_app.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController(IUserRepository userRepository, IUserService userService) : ControllerBase
+    public class AccountController(IUserRepository userRepository, IUserService userService, ILogger<AccountController> logger) : ControllerBase
     {
         private readonly IUserRepository _userRepository = userRepository;
         private readonly IUserService _userService = userService;
+        private readonly ILogger<AccountController> _logger = logger;
 
         // GET: api/account/users
         [HttpGet("users")]
@@ -124,6 +125,7 @@ namespace dot_net_app.Controllers
                 {
                     return Unauthorized("Invalid username/email or password.");
                 }
+                _logger.LogInformation("User successfully logged into application with valid credentials.");
 
                 return Ok(user);
             }

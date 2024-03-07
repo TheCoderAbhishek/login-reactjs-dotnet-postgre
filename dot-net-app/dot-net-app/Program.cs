@@ -5,11 +5,18 @@ using dot_net_app.Model.EmailsService;
 using dot_net_app.Service.AccountService;
 using dot_net_app.Service.EmailsService;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 var Configuration = builder.Configuration;
 
 // Add services to the container.
+var logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .CreateLogger();
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
 
 // Add TempData
 builder.Services.AddMvc()

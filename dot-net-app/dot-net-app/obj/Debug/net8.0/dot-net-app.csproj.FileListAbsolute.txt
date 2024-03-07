@@ -42,3 +42,12 @@ E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\BouncyC
 E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\MailKit.dll
 E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\MimeKit.dll
 E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\BCrypt.Net.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Serilog.Extensions.Logging.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Serilog.Settings.Configuration.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Serilog.Sinks.Console.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Serilog.Sinks.File.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Serilog.AspNetCore.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Serilog.Extensions.Hosting.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Serilog.Formatting.Compact.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Serilog.Sinks.Debug.dll
