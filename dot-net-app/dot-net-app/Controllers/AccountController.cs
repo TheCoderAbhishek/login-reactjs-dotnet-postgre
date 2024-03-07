@@ -124,7 +124,7 @@ namespace dot_net_app.Controllers
                 var user = await _userService.GetUserByUsernameAndPasswordAsync(userLoginRequest.UsernameOrEmail, userLoginRequest.PasswordHash);
                 if (user == null)
                 {
-                    _logger.LogError($"Invalid username/email or password provided for user {userLoginRequest.UsernameOrEmail}.");
+                    _logger.LogError("Invalid login attempt: Username/email and password are empty or null.");
                     return Unauthorized("Invalid username/email or password.");
                 }
                 _logger.LogInformation("User successfully logged into application with valid credentials.");
