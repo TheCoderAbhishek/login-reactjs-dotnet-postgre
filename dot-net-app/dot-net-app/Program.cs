@@ -4,8 +4,11 @@ using dot_net_app.Interface.EmailServiceInterface;
 using dot_net_app.Model.EmailsService;
 using dot_net_app.Service.AccountService;
 using dot_net_app.Service.EmailsService;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 var Configuration = builder.Configuration;
@@ -48,6 +51,33 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Add Authentication
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
+
+    var audience = Configuration["Jwt:Audience"];
+    var issuer = Configuration["Jwt:Issuer"];
+    var key = Configuration["Jwt:Key"];
+
+    if (audience != null && issuer != null && key != null)
+    {
+        options.TokenValidationParameters = new TokenValidationParameters()
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidAudience = audience,
+            ValidIssuer = issuer,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
+        };
+    }
+    else
+    {
+        Console.WriteLine("One or more JWT configuration values are null.");
+    }
+});
+
 var app = builder.Build();
 
 app.UseRouting();
@@ -72,6 +102,8 @@ app.UseCors(builder =>
 });
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
