@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash, faTimes } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
+  const [capVal, setCapVal] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -81,7 +83,7 @@ const Login = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-8">
       <h2 className="text-3xl font-semibold mb-8">Login Page</h2>
-      <div className="w-full max-w-xs border border-gray-300 rounded-md p-4">
+      <div className="w-full max-w-xs border border-gray-300 rounded-md p-2">
         {errors.general && (
           <p className="text-red-500 mb-2">{errors.general}</p>
         )}
@@ -114,7 +116,12 @@ const Login = () => {
             visible={passwordVisible}
             toggleVisibility={togglePasswordVisibility}
           />
+          <ReCAPTCHA
+            sitekey="6LfV0pIpAAAAAAEpWOP7zf2ytk7d1J7xHLaRiPDH"
+            onChange={(val) => setCapVal(val)}
+          />
           <button
+            disabled={!capVal}
             type="submit"
             className="w-full bg-indigo-500 text-white py-2 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600"
           >

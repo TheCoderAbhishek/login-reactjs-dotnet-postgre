@@ -7,6 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./RegistrationStyles.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const Registration = () => {
   const [formData, setFormData] = useState({
@@ -23,6 +24,7 @@ const Registration = () => {
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
+  const [capVal, setCapVal] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -187,7 +189,7 @@ const Registration = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-8">
       <h2 className="text-3xl font-semibold mb-8">Registration Page</h2>
-      <div className="w-full max-w-xs border border-gray-300 rounded-md p-4">
+      <div className="w-full max-w-xs border border-gray-300 rounded-md p-2">
         {errors.general && (
           <p className="text-red-500 mb-4">{errors.general}</p>
         )}
@@ -267,19 +269,24 @@ const Registration = () => {
             <DatePicker
               selected={formData.dateOfBirth}
               onChange={handleDateChange}
-              dateFormat="MM/dd/yyyy" // Set desired date format
+              dateFormat="MM/dd/yyyy"
               placeholderText="Date of Birth"
               className={`w-full px-4 py-2 border ${
                 errors.dateOfBirth ? "border-red-500" : "border-gray-300"
-              } rounded-md focus:outline-none focus:border-indigo-500 text-sm`} // Adjust text size here
-              popperClassName="date-picker-popper" // Add custom class for popper (dropdown)
-              wrapperClassName="date-picker-wrapper" // Add custom class for the wrapper
+              } rounded-md focus:outline-none focus:border-indigo-500 text-sm`}
+              popperClassName="date-picker-popper"
+              wrapperClassName="date-picker-wrapper"
             />
             {errors.dateOfBirth && (
               <p className="text-red-500 mt-1">{errors.dateOfBirth}</p>
             )}
           </div>
+          <ReCAPTCHA
+            sitekey="6LfV0pIpAAAAAAEpWOP7zf2ytk7d1J7xHLaRiPDH"
+            onChange={(val) => setCapVal(val)}
+          />
           <button
+            disabled={!capVal}
             type="submit"
             className="w-full bg-indigo-500 text-white py-2 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600"
           >
