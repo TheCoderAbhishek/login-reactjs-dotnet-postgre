@@ -75,7 +75,6 @@ namespace dot_net_app.Service.AccountService
             }
         }
 
-        // User Registration
         public async Task<User> CreateUserAsync(CreateUserRequest createUserRequest)
         {
             if (!createUserRequest.IsValid())
@@ -198,7 +197,6 @@ namespace dot_net_app.Service.AccountService
             return user;
         }
 
-        // User Login
         public async Task<User?> GetUserByUsernameAndPasswordAsync(string usernameOrEmail, string password)
         {
             var user = await _userRepository.GetUserByUsernameOrEmailAsync(usernameOrEmail);
