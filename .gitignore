@@ -1,6 +1,7 @@
 .vs/
 dot-net-app/dot-net-app/logs/
-dot-net-app/dot-net-app/obj/Debug/net8.0/
+dot-net-app/dot-net-app/obj/Debug/net8.0/ref/
+dot-net-app/dot-net-app/obj/Debug/net8.0/refint/
 dot-net-app/dot-net-app/bin/Debug/net8.0/
 *.dll
 *.cache
