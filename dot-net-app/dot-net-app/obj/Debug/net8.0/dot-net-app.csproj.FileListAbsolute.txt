@@ -51,3 +51,11 @@ E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Serilog
 E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Serilog.Extensions.Hosting.dll
 E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Serilog.Formatting.Compact.dll
 E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Serilog.Sinks.Debug.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+E:\login-reactjs-dotnet-postgre\dot-net-app\dot-net-app\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll

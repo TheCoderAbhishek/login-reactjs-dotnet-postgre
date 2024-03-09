@@ -2,7 +2,6 @@
 using dot_net_app.Interface.AccountInterface;
 using dot_net_app.Model.AccountModel;
 using Microsoft.EntityFrameworkCore;
-using System.Text;
 
 namespace dot_net_app.Service.AccountService
 {
@@ -13,31 +12,19 @@ namespace dot_net_app.Service.AccountService
         public async Task<User> GetUserByIdAsync(int userId)
         {
             var user = await _accountDbContext.Users.FindAsync(userId);
-            if (user == null)
-            {
-                throw new InvalidOperationException($"User with ID {userId} not found.");
-            }
-            return user;
+            return user ?? throw new InvalidOperationException($"User with ID {userId} not found.");
         }
 
         public async Task<User> GetUserByUsernameAsync(string username)
         {
             var user = await _accountDbContext.Users.FirstOrDefaultAsync(u => u.Username == username);
-            if (user == null)
-            {
-                throw new InvalidOperationException($"User with username {username} not found.");
-            }
-            return user;
+            return user ?? throw new InvalidOperationException($"User with username {username} not found.");
         }
 
         public async Task<User> GetUserByEmailAsync(string email)
         {
             var user = await _accountDbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
-            if (user == null)
-            {
-                throw new InvalidOperationException($"User with email {email} not found.");
-            }
-            return user;
+            return user ?? throw new InvalidOperationException($"User with email {email} not found.");
         }
 
         public async Task UpdateUserAsync(User user)
