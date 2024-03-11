@@ -146,7 +146,7 @@ namespace dot_net_app.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"{ex.Message}");
+                _logger.LogError("Authentication error: {ErrorMessage}", ex.Message);
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }

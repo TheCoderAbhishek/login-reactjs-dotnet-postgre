@@ -72,10 +72,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
         };
     }
-    else
-    {
-        Console.WriteLine("One or more JWT configuration values are null.");
-    }
 });
 
 var app = builder.Build();
