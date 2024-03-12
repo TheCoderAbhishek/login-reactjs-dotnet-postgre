@@ -51,5 +51,12 @@ namespace dot_net_app.Interface.AccountInterface
         /// Retrieves a user by username/email and password asynchronously.
         /// </summary>
         Task<User?> GetUserByUsernameAndPasswordAsync(string usernameOrEmail, string password);
+
+        /// <summary>
+        /// Logs out a user.
+        /// </summary>
+        /// <param name="username">The username of the user to log out.</param>
+        /// <returns>A task representing the asynchronous operation of logging out the user.</returns>
+        Task Logout(string username);
     }
 }

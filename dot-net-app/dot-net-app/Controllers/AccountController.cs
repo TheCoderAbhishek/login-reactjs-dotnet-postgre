@@ -150,5 +150,23 @@ namespace dot_net_app.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
+        /// <summary>
+        /// Logs out a user from the application.
+        /// </summary>
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout(string username)
+        {
+            try
+            {
+                await _userService.Logout(username);
+                return Ok(new { message = "User logged out successfully" });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Logout error: {ErrorMessage}", ex.Message);
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
     }
 }

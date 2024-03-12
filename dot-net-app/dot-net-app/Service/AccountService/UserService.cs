@@ -214,5 +214,11 @@ namespace dot_net_app.Service.AccountService
 
             return null;
         }
+
+        public Task Logout(string username)
+        {
+            _memoryCache.Remove(username);
+            return Task.CompletedTask;
+        }
     }
 }
