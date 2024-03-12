@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace dot_net_app.Controllers
 {
+    /// <summary>
+    /// Controller for handling account-related operations.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController(IUserRepository userRepository, IUserService userService, ILogger<AccountController> logger) : ControllerBase
@@ -13,7 +16,9 @@ namespace dot_net_app.Controllers
         private readonly IUserService _userService = userService;
         private readonly ILogger<AccountController> _logger = logger;
 
-        // GET: api/account/users
+        /// <summary>
+        /// Retrieves all users.
+        /// </summary>
         [HttpGet("getAllUsers")]
         public async Task<IActionResult> GetAllUsers()
         {
@@ -28,7 +33,9 @@ namespace dot_net_app.Controllers
             }
         }
 
-        // POST: api/account/verify-otp
+        /// <summary>
+        /// Verifies OTP for a user.
+        /// </summary>
         [HttpPost("verify-otp")]
         public async Task<IActionResult> VerifyOTP([FromBody] VerifyOtpRequest verifyOtpRequest)
         {
@@ -64,7 +71,9 @@ namespace dot_net_app.Controllers
             }
         }
 
-        // POST: api/account/resend-otp
+        /// <summary>
+        /// Resends OTP to a user.
+        /// </summary>
         [HttpPost("resend-otp")]
         public async Task<IActionResult> ResendOTP([FromBody] ResendOtpRequest resendOtpRequest)
         {
@@ -90,7 +99,9 @@ namespace dot_net_app.Controllers
             }
         }
 
-        // POST: api/account/register
+        /// <summary>
+        /// Creates a new user.
+        /// </summary>
         [HttpPost("register")]
         public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest createUserRequest)
         {
@@ -109,7 +120,9 @@ namespace dot_net_app.Controllers
             }
         }
 
-        // POST: api/account/login
+        /// <summary>
+        /// Logs a user into the application.
+        /// </summary>
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginRequest userLoginRequest)
         {
@@ -133,7 +146,7 @@ namespace dot_net_app.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"{ex.Message}");
+                _logger.LogError("Authentication error: {ErrorMessage}", ex.Message);
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
